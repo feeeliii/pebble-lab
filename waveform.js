@@ -20,3 +20,9 @@ export function signal(frequency, phase, seconds, sampleRate) {
   }
   return samples;
 }
+
+export function normalize(samples) {
+  const peak = samples.reduce((max, value) => Math.max(max, Math.abs(value)), 0);
+  if (peak === 0) return samples;
+  return samples.map((value) => value / peak);
+}
