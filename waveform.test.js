@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { oneCycle, signal, normalize } from './waveform.js';
+import { pullValue, oneCycle, signal, normalize } from './waveform.js';
 
 test('one cycle sums to zero (no net force)', () => {
   const samples = oneCycle(200, 0);
@@ -19,4 +19,8 @@ test('normalize scales the largest value to 1', () => {
 
 test('normalize leaves silence unchanged', () => {
   assert.deepEqual(normalize([0, 0]), [0, 0]);
+});
+
+test('without the harmonic the wave is a plain sine (symmetric buzz)', () => {
+  assert.equal(pullValue(1, 0, 0), Math.sin(1));
 });
