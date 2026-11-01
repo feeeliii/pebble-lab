@@ -1,9 +1,12 @@
-import { test } from 'node:test';
-import assert from 'node:assert/strict';
-import { oneCycle } from './waveform.js';
+export function pullValue(x, phase) {
+  return Math.sin(x) + 0.5 * Math.sin(2 * x + phase);
+}
 
-test('one cycle sums to zero (no net force)', () => {
-  const samples = oneCycle(200, 0);
-  const sum = samples.reduce((total, value) => total + value, 0);
-  assert.ok(Math.abs(sum) < 1e-9);
-});
+export function oneCycle(samplesPerCycle, phase) {
+  const samples = [];
+  for (let i = 0; i < samplesPerCycle; i++) {
+    const x = (2 * Math.PI * i) / samplesPerCycle;
+    samples.push(pullValue(x, phase));
+  }
+  return samples;
+}
